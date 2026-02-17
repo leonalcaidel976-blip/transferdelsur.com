@@ -298,7 +298,7 @@ const BookingSection = () => {
         phone: "",
         notes: ""
       });
-      setTimeout(() => setSuccess(false), 5000);
+      setTimeout(() => setSuccess(false), 8000);
     } catch (error) {
       console.error("Error creating reservation:", error);
       alert("Error al crear la reserva. Por favor, inténtelo de nuevo.");
@@ -728,7 +728,7 @@ const ContactSection = () => {
       await axios.post(`${API}/contact`, formData);
       setSuccess(true);
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-      setTimeout(() => setSuccess(false), 5000);
+      setTimeout(() => setSuccess(false), 8000);
     } catch (error) {
       console.error("Error sending message:", error);
       alert("Error al enviar el mensaje. Por favor, inténtelo de nuevo.");
