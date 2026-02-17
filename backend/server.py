@@ -27,7 +27,7 @@ TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '')
 TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID', '')
 
 # JWT Secret
-JWT_SECRET = "transfer_del_sur_secret_key_2024"
+JWT_SECRET = os.environ.get('JWT_SECRET', 'transfer_del_sur_secret_key_2024')
 
 # Create the main app
 app = FastAPI(title="Transfer del Sur API")
@@ -263,9 +263,9 @@ async def delete_contact(contact_id: str, token: dict = Depends(verify_token)):
 # Admin Auth
 @api_router.post("/admin/login", response_model=AdminResponse)
 async def admin_login(data: AdminLogin):
-    # Default admin credentials
-    admin_email = "admin@transferdelsur.es"
-    admin_password = "648791240Luis"
+    # Admin credentials from environment
+    admin_email = os.environ.get('ADMIN_EMAIL', 'admin@transferdelsur.es')
+    admin_password = os.environ.get('ADMIN_PASSWORD', '648791240Luis')
     
     if data.email == admin_email and data.password == admin_password:
         token = jwt.encode(
