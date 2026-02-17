@@ -769,7 +769,7 @@ const AboutSection = () => (
 
         <div className="relative">
           <img 
-            src="https://images.unsplash.com/photo-1760552973934-93752b5352bd?w=600&h=700&fit=crop"
+            src="https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/9zohw34f_WhatsApp%20Image%202026-02-17%20at%2020.18.05.jpeg"
             alt="Interior de lujo"
             className="w-full h-auto rounded-lg"
           />
