@@ -518,40 +518,127 @@ const ServicesSection = () => (
   </section>
 );
 
-// Fleet Section
-const FleetSection = () => (
-  <section id="flota" className="py-24 bg-[#0d0d0f]" data-testid="fleet-section">
-    <div className="max-w-7xl mx-auto px-6">
-      <div className="mb-16">
-        <p className="section-label">Nuestra Flota</p>
-        <h2 className="section-title">Vehículos de Lujo</h2>
-        <div className="gold-underline"></div>
-      </div>
+// Fleet Section with Gallery
+const FleetSection = () => {
+  const [selectedCar, setSelectedCar] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-      <div className="grid md:grid-cols-3 gap-8">
-        {fleet.map((car, i) => (
-          <div key={i} className="fleet-card" data-testid={`fleet-card-${i}`}>
-            <img src={car.image} alt={car.name} className="fleet-image" />
-            <div className="fleet-info">
-              <p className="text-gold text-xs uppercase tracking-wider mb-1">{car.category}</p>
-              <h3 className="text-2xl mb-4" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                {car.name}
-              </h3>
-              <div className="flex gap-6 text-sm text-gray-400">
-                <span className="flex items-center gap-2">
-                  <Users size={14} /> {car.passengers} pax
-                </span>
-                <span className="flex items-center gap-2">
-                  <Briefcase size={14} /> {car.luggage} maletas
-                </span>
+  const openGallery = (car) => {
+    if (car.gallery && car.gallery.length > 0) {
+      setSelectedCar(car);
+      setCurrentImageIndex(0);
+    }
+  };
+
+  const closeGallery = () => {
+    setSelectedCar(null);
+    setCurrentImageIndex(0);
+  };
+
+  const nextImage = () => {
+    if (selectedCar && selectedCar.gallery) {
+      setCurrentImageIndex((prev) => (prev + 1) % selectedCar.gallery.length);
+    }
+  };
+
+  const prevImage = () => {
+    if (selectedCar && selectedCar.gallery) {
+      setCurrentImageIndex((prev) => (prev - 1 + selectedCar.gallery.length) % selectedCar.gallery.length);
+    }
+  };
+
+  return (
+    <section id="flota" className="py-24 bg-[#0d0d0f]" data-testid="fleet-section">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="mb-16">
+          <p className="section-label">Nuestra Flota</p>
+          <h2 className="section-title">Vehículos de Lujo</h2>
+          <div className="gold-underline"></div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {fleet.map((car, i) => (
+            <div 
+              key={i} 
+              className="fleet-card cursor-pointer" 
+              data-testid={`fleet-card-${i}`}
+              onClick={() => openGallery(car)}
+            >
+              <div className="relative">
+                <img src={car.image} alt={car.name} className="fleet-image" />
+                {car.gallery && car.gallery.length > 1 && (
+                  <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                    {car.gallery.length} fotos
+                  </div>
+                )}
+              </div>
+              <div className="fleet-info">
+                <p className="text-gold text-xs uppercase tracking-wider mb-1">{car.category}</p>
+                <h3 className="text-2xl mb-4" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  {car.name}
+                </h3>
+                <div className="flex gap-6 text-sm text-gray-400">
+                  <span className="flex items-center gap-2">
+                    <Users size={14} /> {car.passengers} pax
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <Briefcase size={14} /> {car.luggage} maletas
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+
+      {/* Gallery Modal */}
+      {selectedCar && (
+        <div 
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
+          onClick={closeGallery}
+        >
+          <button 
+            className="absolute top-4 right-4 text-white hover:text-gold transition"
+            onClick={closeGallery}
+          >
+            <X size={32} />
+          </button>
+          
+          <button 
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gold transition p-2"
+            onClick={(e) => { e.stopPropagation(); prevImage(); }}
+          >
+            <ChevronRight size={40} className="rotate-180" />
+          </button>
+
+          <div className="max-w-4xl max-h-[80vh] px-16" onClick={(e) => e.stopPropagation()}>
+            <img 
+              src={selectedCar.gallery[currentImageIndex]} 
+              alt={`${selectedCar.name} - Foto ${currentImageIndex + 1}`}
+              className="max-w-full max-h-[70vh] object-contain mx-auto"
+            />
+            <div className="text-center mt-4">
+              <p className="text-white text-xl" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                {selectedCar.name}
+              </p>
+              <p className="text-gray-400 text-sm mt-2">
+                {currentImageIndex + 1} / {selectedCar.gallery.length}
+              </p>
+            </div>
+          </div>
+
+          <button 
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gold transition p-2"
+            onClick={(e) => { e.stopPropagation(); nextImage(); }}
+          >
+            <ChevronRight size={40} />
+          </button>
+        </div>
+      )}
+    </section>
+  );
+};
 
 // Prices Section
 const PricesSection = () => (
