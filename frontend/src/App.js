@@ -42,7 +42,12 @@ const fleet = [
     category: "Sedan Ejecutivo",
     passengers: "1-3",
     luggage: "3",
-    image: "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/14xa6qhm_image.png"
+    image: "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/14xa6qhm_image.png",
+    gallery: [
+      "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/14xa6qhm_image.png",
+      "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/4j0y6w9u_image.png",
+      "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/os5xodrl_image.png"
+    ]
   },
   {
     name: "Mercedes Clase V",
