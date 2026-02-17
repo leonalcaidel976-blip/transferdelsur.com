@@ -265,7 +265,7 @@ async def delete_contact(contact_id: str, token: dict = Depends(verify_token)):
 async def admin_login(data: AdminLogin):
     # Default admin credentials
     admin_email = "admin@transferdelsur.es"
-    admin_password = "admin123"
+    admin_password = "648791240Luis"
     
     if data.email == admin_email and data.password == admin_password:
         token = jwt.encode(
