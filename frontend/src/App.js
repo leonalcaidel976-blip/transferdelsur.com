@@ -567,7 +567,7 @@ const FleetSection = () => {
           <div className="gold-underline"></div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {fleet.map((car, i) => (
             <div 
               key={i} 
