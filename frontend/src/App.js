@@ -54,8 +54,9 @@ const fleet = [
     category: "Sedan Ejecutivo",
     passengers: "1-3",
     luggage: "3",
-    image: "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/gepzp8ba_image.png",
+    image: "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/r87m5iy1_WhatsApp%20Image%202026-02-17%20at%2019.18.41.jpeg",
     gallery: [
+      "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/r87m5iy1_WhatsApp%20Image%202026-02-17%20at%2019.18.41.jpeg",
       "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/gepzp8ba_image.png",
       "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/wkku5adx_WhatsApp%20Image%202026-02-17%20at%2019.13.56.jpeg"
     ]
