@@ -42,7 +42,7 @@ const fleet = [
     category: "Sedan Ejecutivo",
     passengers: "1-3",
     luggage: "3",
-    image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&h=400&fit=crop"
+    image: "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/14xa6qhm_image.png"
   },
   {
     name: "Mercedes Clase V",
