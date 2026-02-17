@@ -49,7 +49,7 @@ const fleet = [
     category: "Van Premium",
     passengers: "4-7",
     luggage: "7",
-    image: "https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=600&h=400&fit=crop"
+    image: "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/4w52bumt_WhatsApp%20Image%202026-02-17%20at%2018.25.00.jpeg"
   },
   {
     name: "Mercedes Clase S",
