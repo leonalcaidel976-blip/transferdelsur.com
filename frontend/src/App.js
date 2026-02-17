@@ -56,7 +56,7 @@ const fleet = [
     category: "Sedan Lujo",
     passengers: "1-3",
     luggage: "3",
-    image: "https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=600&h=400&fit=crop"
+    image: "https://customer-assets.emergentagent.com/job_telegram-bot-backup/artifacts/02lpptha_image.png"
   }
 ];
 
