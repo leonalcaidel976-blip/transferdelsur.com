@@ -113,6 +113,8 @@ async def send_telegram_notification(reservation: Reservation):
         "tours": "Tour Exclusivo"
     }
     
+    vehicle_info = f"\n🚙 *Vehículo:* {reservation.preferred_vehicle}" if reservation.preferred_vehicle else ""
+    
     message = f"""
 🚗 *NUEVA RESERVA - Transfer del Sur*
 
@@ -122,7 +124,7 @@ async def send_telegram_notification(reservation: Reservation):
 📅 *Fecha:* {reservation.date}
 ⏰ *Hora:* {reservation.time}
 👥 *Pasajeros:* {reservation.passengers}
-🧳 *Maletas:* {reservation.luggage}
+🧳 *Maletas:* {reservation.luggage}{vehicle_info}
 
 👤 *Cliente:* {reservation.name}
 📧 *Email:* {reservation.email}
