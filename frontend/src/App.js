@@ -733,7 +733,8 @@ const BookingSection = () => {
         name: "",
         email: "",
         phone: "",
-        notes: ""
+        notes: "",
+        preferred_vehicle: ""
       });
       setTimeout(() => setSuccess(false), 8000);
     } catch (error) {
@@ -747,8 +748,8 @@ const BookingSection = () => {
     <section id="reservar" className="py-24 bg-[#0A0A0B]" data-testid="booking-section">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-12">
-          <p className="section-label">Reserva Online</p>
-          <h2 className="section-title">Reservar Vehículo</h2>
+          <p className="section-label">{t('reservaOnline')}</p>
+          <h2 className="section-title">{t('reservarVehiculo')}</h2>
         </div>
 
         <div className="card">
@@ -759,35 +760,35 @@ const BookingSection = () => {
               onClick={() => setActiveTab("aeropuerto")}
               data-testid="tab-aeropuerto"
             >
-              <Plane size={16} /> Aeropuerto
+              <Plane size={16} /> {t('aeropuerto')}
             </button>
             <button
               className={`tab-button ${activeTab === "por_horas" ? "active" : ""}`}
               onClick={() => setActiveTab("por_horas")}
               data-testid="tab-horas"
             >
-              <Clock size={16} /> Por Horas
+              <Clock size={16} /> {t('porHoras')}
             </button>
             <button
               className={`tab-button ${activeTab === "tours" ? "active" : ""}`}
               onClick={() => setActiveTab("tours")}
               data-testid="tab-tours"
             >
-              <Map size={16} /> Tours
+              <Map size={16} /> {t('tours')}
             </button>
           </div>
 
           {success && (
             <div className="bg-green-900/30 border border-green-500 text-green-400 p-4 rounded mb-6 flex items-center gap-2">
               <Check size={20} />
-              ¡Reserva enviada correctamente! Recibirá confirmación por email y WhatsApp.
+              {t('reservaExitosa')}
             </div>
           )}
 
           <form onSubmit={handleSubmit}>
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Punto de recogida *</label>
+                <label className="block text-sm text-gray-400 mb-2">{t('puntoRecogida')} *</label>
                 <input
                   type="text"
                   name="pickup_location"
