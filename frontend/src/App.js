@@ -1093,7 +1093,7 @@ const FleetSection = () => {
 // Prices Section
 const PricesSection = () => (
   <section id="tarifas" className="py-24" data-testid="prices-section">
-    <div className="max-w-5xl mx-auto px-6">
+    <div className="max-w-6xl mx-auto px-6">
       <div className="text-center mb-16">
         <p className="section-label">Tarifas Transparentes</p>
         <h2 className="section-title">Precios desde Aeropuerto</h2>
@@ -1108,8 +1108,9 @@ const PricesSection = () => (
             <tr>
               <th>Destino</th>
               <th>Duración</th>
-              <th>Sedan (1-3 pax)</th>
-              <th>Van (4-7 pax)</th>
+              <th>Clase E (1-3 pax)</th>
+              <th>Clase V (4-7 pax)</th>
+              <th>Clase S (1-3 pax)</th>
             </tr>
           </thead>
           <tbody>
@@ -1119,14 +1120,20 @@ const PricesSection = () => (
                 <td className="text-gray-400">{price.duration}</td>
                 <td className="text-gold font-semibold">{price.sedan}</td>
                 <td className="text-gold font-semibold">{price.van}</td>
+                <td className="text-gold font-semibold">{price.claseS}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <p className="text-center text-gray-500 text-sm mt-6">
-        * Precios para trayecto simple. Consulte tarifas de ida y vuelta con descuento.
-      </p>
+      <div className="mt-6 space-y-2">
+        <p className="text-center text-gray-500 text-sm">
+          * Precios para trayecto simple. Consulte tarifas de ida y vuelta con descuento.
+        </p>
+        <p className="text-center text-gold text-sm font-medium">
+          ** Mercedes Clase S incluye suplemento de +45€ sobre tarifa Clase E
+        </p>
+      </div>
     </div>
   </section>
 );
