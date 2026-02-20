@@ -56,6 +56,7 @@ class ReservationCreate(BaseModel):
     email: EmailStr
     phone: str
     notes: Optional[str] = None
+    preferred_vehicle: Optional[str] = None
 
 class Reservation(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -70,6 +71,7 @@ class Reservation(BaseModel):
     email: str
     phone: str
     notes: Optional[str] = None
+    preferred_vehicle: Optional[str] = None
     status: str = "pendiente"
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
