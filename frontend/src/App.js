@@ -664,31 +664,33 @@ const HeroSection = () => {
         <div className="stat-item">
           <Shield className="stat-icon" size={20} />
           <div>
-            <p className="stat-label">Licencia VTC</p>
-            <p className="stat-value">100% Legal</p>
+            <p className="stat-label">{t('licenciaVtc')}</p>
+            <p className="stat-value">{t('legal')}</p>
           </div>
         </div>
         <div className="stat-item">
           <Star className="stat-icon" size={20} />
           <div>
-            <p className="stat-label">5 Estrellas</p>
-            <p className="stat-value">+500 Viajes</p>
+            <p className="stat-label">{t('estrellas')}</p>
+            <p className="stat-value">{t('viajes')}</p>
           </div>
         </div>
         <div className="stat-item">
           <Users className="stat-icon" size={20} />
           <div>
-            <p className="stat-label">Conductores</p>
-            <p className="stat-value">Certificados</p>
+            <p className="stat-label">{t('conductores')}</p>
+            <p className="stat-value">{t('certificados')}</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 );
+};
 
 // Booking Form Section
 const BookingSection = () => {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState("aeropuerto");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -702,7 +704,8 @@ const BookingSection = () => {
     name: "",
     email: "",
     phone: "",
-    notes: ""
+    notes: "",
+    preferred_vehicle: ""
   });
 
   const handleChange = (e) => {
