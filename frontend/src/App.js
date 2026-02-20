@@ -785,6 +785,31 @@ const BookingSection = () => {
             </div>
           )}
 
+          {/* Hourly prices info */}
+          {activeTab === "por_horas" && (
+            <div className="bg-[#1a1a1d] border border-[#2a2a2d] rounded-lg p-6 mb-6">
+              <h3 className="text-gold text-sm uppercase tracking-wider mb-4 font-medium">Tarifas por Hora (IVA incluido)</h3>
+              <div className="grid md:grid-cols-3 gap-4 mb-4">
+                <div className="text-center p-4 border border-[#2a2a2d] rounded">
+                  <p className="text-gray-400 text-xs uppercase mb-1">Mercedes Clase E</p>
+                  <p className="text-2xl text-gold font-light">60€<span className="text-sm text-gray-400">/hora</span></p>
+                </div>
+                <div className="text-center p-4 border border-[#2a2a2d] rounded">
+                  <p className="text-gray-400 text-xs uppercase mb-1">Mercedes Clase V</p>
+                  <p className="text-2xl text-gold font-light">75€<span className="text-sm text-gray-400">/hora</span></p>
+                </div>
+                <div className="text-center p-4 border border-[#2a2a2d] rounded">
+                  <p className="text-gray-400 text-xs uppercase mb-1">Mercedes Clase S</p>
+                  <p className="text-2xl text-gold font-light">95€<span className="text-sm text-gray-400">/hora</span></p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-4 text-sm text-gray-400 justify-center">
+                <span className="flex items-center gap-1"><Check size={14} className="text-gold" /> Mínimo 4 horas</span>
+                <span className="flex items-center gap-1"><Phone size={14} className="text-gold" /> +8 horas: Contáctenos</span>
+              </div>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit}>
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div>
