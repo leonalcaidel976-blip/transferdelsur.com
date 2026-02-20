@@ -77,16 +77,16 @@ const fleet = [
   }
 ];
 
-// Prices data
+// Prices data (updated +20€)
 const prices = [
-  { destination: "Marbella Centro", duration: "45 min", sedan: "75€", van: "95€" },
-  { destination: "Puerto Banús", duration: "50 min", sedan: "80€", van: "100€" },
-  { destination: "Estepona", duration: "60 min", sedan: "90€", van: "115€" },
-  { destination: "Fuengirola", duration: "25 min", sedan: "45€", van: "60€" },
-  { destination: "Torremolinos", duration: "15 min", sedan: "35€", van: "45€" },
-  { destination: "Benalmádena", duration: "20 min", sedan: "40€", van: "55€" },
-  { destination: "Málaga Centro", duration: "15 min", sedan: "30€", van: "40€" },
-  { destination: "Nerja", duration: "70 min", sedan: "110€", van: "140€" }
+  { destination: "Marbella Centro", duration: "45 min", sedan: "95€", van: "115€" },
+  { destination: "Puerto Banús", duration: "50 min", sedan: "100€", van: "120€" },
+  { destination: "Estepona", duration: "60 min", sedan: "110€", van: "135€" },
+  { destination: "Fuengirola", duration: "25 min", sedan: "65€", van: "80€" },
+  { destination: "Torremolinos", duration: "15 min", sedan: "55€", van: "65€" },
+  { destination: "Benalmádena", duration: "20 min", sedan: "60€", van: "75€" },
+  { destination: "Málaga Centro", duration: "15 min", sedan: "50€", van: "60€" },
+  { destination: "Nerja", duration: "70 min", sedan: "130€", van: "160€" }
 ];
 
 // Testimonials
