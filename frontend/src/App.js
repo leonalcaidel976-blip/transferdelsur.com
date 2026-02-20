@@ -899,7 +899,7 @@ const BookingSection = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Email *</label>
+                <label className="block text-sm text-gray-400 mb-2">{t('email')} *</label>
                 <input
                   type="email"
                   name="email"
@@ -912,7 +912,7 @@ const BookingSection = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Teléfono *</label>
+                <label className="block text-sm text-gray-400 mb-2">{t('telefono')} *</label>
                 <input
                   type="tel"
                   name="phone"
@@ -932,7 +932,7 @@ const BookingSection = () => {
               disabled={loading}
               data-testid="submit-reservation"
             >
-              {loading ? "Enviando..." : "Reservar Ahora"}
+              {loading ? "..." : t('reservarAhora')}
             </button>
           </form>
         </div>
