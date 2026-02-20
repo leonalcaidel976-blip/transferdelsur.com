@@ -880,7 +880,7 @@ const BookingSection = () => {
                 <option value="">{t('sinPreferencia')}</option>
                 <option value="Mercedes Clase E (Sedan Ejecutivo)">Mercedes Clase E (Sedan Ejecutivo - 1-3 pax)</option>
                 <option value="Mercedes Clase V (Van Premium)">Mercedes Clase V (Van Premium - 4-7 pax)</option>
-                <option value="Mercedes Clase S (Sedan Lujo)">Mercedes Clase S (Sedan Lujo - 1-3 pax)</option>
+                <option value="Mercedes Clase S (Sedan Lujo) +45€">Mercedes Clase S (Sedan Lujo - 1-3 pax) +45€ suplemento</option>
               </select>
             </div>
 
