@@ -1,15 +1,428 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { 
   Plane, Clock, Map, Car, Users, Shield, Star, Phone, Mail, 
   MapPin, Instagram, Menu, X, ChevronRight, Quote, Calendar,
-  Briefcase, Check, Send, MessageCircle
+  Briefcase, Check, Send, MessageCircle, Globe
 } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
+
+// Translations
+const translations = {
+  es: {
+    // Navbar
+    inicio: "Inicio",
+    servicios: "Servicios",
+    flota: "Flota",
+    tarifas: "Tarifas",
+    nosotros: "Nosotros",
+    blog: "Blog",
+    contacto: "Contacto",
+    reservar: "Reservar",
+    admin: "Admin",
+    // Hero
+    servicioPremium: "Servicio Premium VTC",
+    heroTitle1: "Su Experiencia",
+    heroTitle2: "en la Costa del Sol",
+    heroDesc: "Traslados de lujo al aeropuerto, servicios por horas y tours exclusivos por Málaga y alrededores. Conductores profesionales, vehículos premium.",
+    reservarAhora: "Reservar Ahora",
+    verFlota: "Ver Flota",
+    licenciaVtc: "Licencia VTC",
+    legal: "100% Legal",
+    estrellas: "5 Estrellas",
+    viajes: "+500 Viajes",
+    conductores: "Conductores",
+    certificados: "Certificados",
+    // Booking
+    reservaOnline: "Reserva Online",
+    reservarVehiculo: "Reservar Vehículo",
+    aeropuerto: "Aeropuerto",
+    porHoras: "Por Horas",
+    tours: "Tours",
+    puntoRecogida: "Punto de recogida",
+    destino: "Destino",
+    seleccioneDestino: "Seleccione destino",
+    fecha: "Fecha",
+    hora: "Hora",
+    pasajeros: "Pasajeros",
+    maletas: "Maletas",
+    nombreCompleto: "Nombre completo",
+    email: "Email",
+    telefono: "Teléfono",
+    vehiculoPreferido: "Vehículo preferido",
+    sinPreferencia: "Sin preferencia",
+    reservaExitosa: "¡Reserva enviada correctamente! Recibirá confirmación por email y WhatsApp.",
+    // Services
+    nuestrosServicios: "Nuestros Servicios",
+    experienciasPremium: "Experiencias Premium",
+    trasladosAeropuerto: "Traslados Aeropuerto",
+    trasladosDesc: "Servicio premium de recogida y traslado al Aeropuerto de Málaga. Monitorización de vuelos incluida.",
+    servicioPorHoras: "Servicio por Horas",
+    horasDesc: "Disposición de chófer y vehículo por el tiempo que necesite. Ideal para reuniones y eventos.",
+    toursExclusivos: "Tours Exclusivos",
+    toursDesc: "Descubra la Costa del Sol, Ronda, Granada o Sevilla con nuestros tours personalizados.",
+    servicioCorporativo: "Servicio Corporativo",
+    corporativoDesc: "Soluciones de transporte para empresas. Facturación mensual y tarifas especiales.",
+    // Fleet
+    nuestraFlota: "Nuestra Flota",
+    vehiculosLujo: "Vehículos de Lujo",
+    fotos: "fotos",
+    pax: "pax",
+    // Prices
+    tarifasTransparentes: "Tarifas Transparentes",
+    preciosDesde: "Precios desde Aeropuerto",
+    preciosDesc: "Tarifas fijas sin sorpresas. El precio incluye peajes, parking y 60 minutos de espera gratis.",
+    duracion: "Duración",
+    sedan: "Sedan (1-3 pax)",
+    van: "Van (4-7 pax)",
+    preciosNota: "* Precios para trayecto simple. Consulte tarifas de ida y vuelta con descuento.",
+    // Testimonials
+    testimonios: "Testimonios",
+    loQueDicen: "Lo Que Dicen Nuestros Clientes",
+    // About
+    sobreNosotros: "Sobre Nosotros",
+    excelenciaKm: "Excelencia en Cada Kilómetro",
+    aboutText1: "Desde 2015, Transfer del Sur Costa del Sol ha redefinido el concepto de transporte premium en la región. Nacimos con una misión clara: ofrecer un servicio de chófer que combine la elegancia europea con la calidez mediterránea.",
+    aboutText2: "Nuestros conductores no son simplemente profesionales del volante; son embajadores de la Costa del Sol. Hablan múltiples idiomas, conocen cada rincón de la región y están entrenados para anticipar sus necesidades antes de que las exprese.",
+    aboutText3: "Cada vehículo de nuestra flota es seleccionado meticulosamente y mantenido con los más altos estándares. Porque sabemos que los detalles marcan la diferencia entre un viaje y una experiencia inolvidable.",
+    anosExperiencia: "Años de Experiencia",
+    clientesSatisfechos: "Clientes Satisfechos",
+    kmRecorridos: "Kilómetros Recorridos",
+    // Blog
+    blogNoticias: "Blog & Noticias",
+    descubreCosta: "Descubre la Costa del Sol",
+    verTodos: "Ver Todos",
+    // Contact
+    tienePreguntas: "¿Tiene Alguna Pregunta?",
+    contactoDesc: "Estamos disponibles 24/7 para atender sus consultas y reservas. No dude en contactarnos por el medio que le resulte más cómodo.",
+    direccion: "Dirección",
+    contactarWhatsapp: "Contactar por WhatsApp",
+    nombre: "Nombre",
+    asunto: "Asunto",
+    mensaje: "Mensaje",
+    enviarMensaje: "Enviar Mensaje",
+    mensajeExitoso: "¡Mensaje enviado correctamente! Nos pondremos en contacto pronto.",
+    // Footer
+    derechos: "Todos los derechos reservados."
+  },
+  en: {
+    inicio: "Home",
+    servicios: "Services",
+    flota: "Fleet",
+    tarifas: "Rates",
+    nosotros: "About Us",
+    blog: "Blog",
+    contacto: "Contact",
+    reservar: "Book",
+    admin: "Admin",
+    servicioPremium: "Premium VTC Service",
+    heroTitle1: "Your Experience",
+    heroTitle2: "on the Costa del Sol",
+    heroDesc: "Luxury airport transfers, hourly services and exclusive tours around Málaga and surroundings. Professional drivers, premium vehicles.",
+    reservarAhora: "Book Now",
+    verFlota: "View Fleet",
+    licenciaVtc: "VTC License",
+    legal: "100% Legal",
+    estrellas: "5 Stars",
+    viajes: "+500 Trips",
+    conductores: "Drivers",
+    certificados: "Certified",
+    reservaOnline: "Online Booking",
+    reservarVehiculo: "Book Vehicle",
+    aeropuerto: "Airport",
+    porHoras: "Hourly",
+    tours: "Tours",
+    puntoRecogida: "Pickup point",
+    destino: "Destination",
+    seleccioneDestino: "Select destination",
+    fecha: "Date",
+    hora: "Time",
+    pasajeros: "Passengers",
+    maletas: "Luggage",
+    nombreCompleto: "Full name",
+    email: "Email",
+    telefono: "Phone",
+    vehiculoPreferido: "Preferred vehicle",
+    sinPreferencia: "No preference",
+    reservaExitosa: "Booking sent successfully! You will receive confirmation by email and WhatsApp.",
+    nuestrosServicios: "Our Services",
+    experienciasPremium: "Premium Experiences",
+    trasladosAeropuerto: "Airport Transfers",
+    trasladosDesc: "Premium pickup and transfer service to Málaga Airport. Flight monitoring included.",
+    servicioPorHoras: "Hourly Service",
+    horasDesc: "Driver and vehicle at your disposal for as long as you need. Ideal for meetings and events.",
+    toursExclusivos: "Exclusive Tours",
+    toursDesc: "Discover the Costa del Sol, Ronda, Granada or Seville with our personalized tours.",
+    servicioCorporativo: "Corporate Service",
+    corporativoDesc: "Transport solutions for companies. Monthly billing and special rates.",
+    nuestraFlota: "Our Fleet",
+    vehiculosLujo: "Luxury Vehicles",
+    fotos: "photos",
+    pax: "pax",
+    tarifasTransparentes: "Transparent Rates",
+    preciosDesde: "Prices from Airport",
+    preciosDesc: "Fixed rates with no surprises. Price includes tolls, parking and 60 minutes free waiting.",
+    duracion: "Duration",
+    sedan: "Sedan (1-3 pax)",
+    van: "Van (4-7 pax)",
+    preciosNota: "* Prices for one-way trip. Ask about round-trip discounts.",
+    testimonios: "Testimonials",
+    loQueDicen: "What Our Clients Say",
+    sobreNosotros: "About Us",
+    excelenciaKm: "Excellence in Every Kilometer",
+    aboutText1: "Since 2015, Transfer del Sur Costa del Sol has redefined the concept of premium transportation in the region. We were born with a clear mission: to offer a chauffeur service that combines European elegance with Mediterranean warmth.",
+    aboutText2: "Our drivers are not simply driving professionals; they are ambassadors of the Costa del Sol. They speak multiple languages, know every corner of the region and are trained to anticipate your needs before you express them.",
+    aboutText3: "Each vehicle in our fleet is meticulously selected and maintained to the highest standards. Because we know that details make the difference between a trip and an unforgettable experience.",
+    anosExperiencia: "Years of Experience",
+    clientesSatisfechos: "Satisfied Clients",
+    kmRecorridos: "Kilometers Traveled",
+    blogNoticias: "Blog & News",
+    descubreCosta: "Discover the Costa del Sol",
+    verTodos: "View All",
+    tienePreguntas: "Have Any Questions?",
+    contactoDesc: "We are available 24/7 to answer your queries and bookings. Don't hesitate to contact us through whichever means is most convenient for you.",
+    direccion: "Address",
+    contactarWhatsapp: "Contact via WhatsApp",
+    nombre: "Name",
+    asunto: "Subject",
+    mensaje: "Message",
+    enviarMensaje: "Send Message",
+    mensajeExitoso: "Message sent successfully! We will get in touch soon.",
+    derechos: "All rights reserved."
+  },
+  it: {
+    inicio: "Home",
+    servicios: "Servizi",
+    flota: "Flotta",
+    tarifas: "Tariffe",
+    nosotros: "Chi Siamo",
+    blog: "Blog",
+    contacto: "Contatto",
+    reservar: "Prenota",
+    admin: "Admin",
+    servicioPremium: "Servizio Premium VTC",
+    heroTitle1: "La Tua Esperienza",
+    heroTitle2: "sulla Costa del Sol",
+    heroDesc: "Trasferimenti di lusso dall'aeroporto, servizi a ore e tour esclusivi a Málaga e dintorni. Autisti professionisti, veicoli premium.",
+    reservarAhora: "Prenota Ora",
+    verFlota: "Vedi Flotta",
+    licenciaVtc: "Licenza VTC",
+    legal: "100% Legale",
+    estrellas: "5 Stelle",
+    viajes: "+500 Viaggi",
+    conductores: "Autisti",
+    certificados: "Certificati",
+    reservaOnline: "Prenotazione Online",
+    reservarVehiculo: "Prenota Veicolo",
+    aeropuerto: "Aeroporto",
+    porHoras: "A Ore",
+    tours: "Tour",
+    puntoRecogida: "Punto di ritiro",
+    destino: "Destinazione",
+    seleccioneDestino: "Seleziona destinazione",
+    fecha: "Data",
+    hora: "Ora",
+    pasajeros: "Passeggeri",
+    maletas: "Bagagli",
+    nombreCompleto: "Nome completo",
+    email: "Email",
+    telefono: "Telefono",
+    vehiculoPreferido: "Veicolo preferito",
+    sinPreferencia: "Nessuna preferenza",
+    reservaExitosa: "Prenotazione inviata con successo! Riceverai conferma via email e WhatsApp.",
+    nuestrosServicios: "I Nostri Servizi",
+    experienciasPremium: "Esperienze Premium",
+    trasladosAeropuerto: "Trasferimenti Aeroporto",
+    trasladosDesc: "Servizio premium di ritiro e trasferimento all'Aeroporto di Málaga. Monitoraggio voli incluso.",
+    servicioPorHoras: "Servizio a Ore",
+    horasDesc: "Autista e veicolo a tua disposizione per tutto il tempo necessario. Ideale per riunioni ed eventi.",
+    toursExclusivos: "Tour Esclusivi",
+    toursDesc: "Scopri la Costa del Sol, Ronda, Granada o Siviglia con i nostri tour personalizzati.",
+    servicioCorporativo: "Servizio Aziendale",
+    corporativoDesc: "Soluzioni di trasporto per aziende. Fatturazione mensile e tariffe speciali.",
+    nuestraFlota: "La Nostra Flotta",
+    vehiculosLujo: "Veicoli di Lusso",
+    fotos: "foto",
+    pax: "pax",
+    tarifasTransparentes: "Tariffe Trasparenti",
+    preciosDesde: "Prezzi dall'Aeroporto",
+    preciosDesc: "Tariffe fisse senza sorprese. Il prezzo include pedaggi, parcheggio e 60 minuti di attesa gratuiti.",
+    duracion: "Durata",
+    sedan: "Sedan (1-3 pax)",
+    van: "Van (4-7 pax)",
+    preciosNota: "* Prezzi per tratta semplice. Chiedi le tariffe andata e ritorno con sconto.",
+    testimonios: "Testimonianze",
+    loQueDicen: "Cosa Dicono i Nostri Clienti",
+    sobreNosotros: "Chi Siamo",
+    excelenciaKm: "Eccellenza in Ogni Chilometro",
+    aboutText1: "Dal 2015, Transfer del Sur Costa del Sol ha ridefinito il concetto di trasporto premium nella regione. Siamo nati con una missione chiara: offrire un servizio di autista che combini l'eleganza europea con il calore mediterraneo.",
+    aboutText2: "I nostri autisti non sono semplicemente professionisti della guida; sono ambasciatori della Costa del Sol. Parlano più lingue, conoscono ogni angolo della regione e sono addestrati ad anticipare le tue esigenze prima che tu le esprima.",
+    aboutText3: "Ogni veicolo della nostra flotta è selezionato meticolosamente e mantenuto ai più alti standard. Perché sappiamo che i dettagli fanno la differenza tra un viaggio e un'esperienza indimenticabile.",
+    anosExperiencia: "Anni di Esperienza",
+    clientesSatisfechos: "Clienti Soddisfatti",
+    kmRecorridos: "Chilometri Percorsi",
+    blogNoticias: "Blog & Notizie",
+    descubreCosta: "Scopri la Costa del Sol",
+    verTodos: "Vedi Tutti",
+    tienePreguntas: "Hai Domande?",
+    contactoDesc: "Siamo disponibili 24/7 per rispondere alle tue richieste e prenotazioni. Non esitare a contattarci con il mezzo che ti è più comodo.",
+    direccion: "Indirizzo",
+    contactarWhatsapp: "Contatta via WhatsApp",
+    nombre: "Nome",
+    asunto: "Oggetto",
+    mensaje: "Messaggio",
+    enviarMensaje: "Invia Messaggio",
+    mensajeExitoso: "Messaggio inviato con successo! Ti contatteremo presto.",
+    derechos: "Tutti i diritti riservati."
+  },
+  de: {
+    inicio: "Startseite",
+    servicios: "Dienstleistungen",
+    flota: "Flotte",
+    tarifas: "Preise",
+    nosotros: "Über Uns",
+    blog: "Blog",
+    contacto: "Kontakt",
+    reservar: "Buchen",
+    admin: "Admin",
+    servicioPremium: "Premium VTC Service",
+    heroTitle1: "Ihr Erlebnis",
+    heroTitle2: "an der Costa del Sol",
+    heroDesc: "Luxus-Flughafentransfers, Stundenservice und exklusive Touren rund um Málaga und Umgebung. Professionelle Fahrer, Premium-Fahrzeuge.",
+    reservarAhora: "Jetzt Buchen",
+    verFlota: "Flotte Ansehen",
+    licenciaVtc: "VTC-Lizenz",
+    legal: "100% Legal",
+    estrellas: "5 Sterne",
+    viajes: "+500 Fahrten",
+    conductores: "Fahrer",
+    certificados: "Zertifiziert",
+    reservaOnline: "Online-Buchung",
+    reservarVehiculo: "Fahrzeug Buchen",
+    aeropuerto: "Flughafen",
+    porHoras: "Stundenweise",
+    tours: "Touren",
+    puntoRecogida: "Abholpunkt",
+    destino: "Ziel",
+    seleccioneDestino: "Ziel auswählen",
+    fecha: "Datum",
+    hora: "Uhrzeit",
+    pasajeros: "Passagiere",
+    maletas: "Gepäck",
+    nombreCompleto: "Vollständiger Name",
+    email: "E-Mail",
+    telefono: "Telefon",
+    vehiculoPreferido: "Bevorzugtes Fahrzeug",
+    sinPreferencia: "Keine Präferenz",
+    reservaExitosa: "Buchung erfolgreich gesendet! Sie erhalten eine Bestätigung per E-Mail und WhatsApp.",
+    nuestrosServicios: "Unsere Dienstleistungen",
+    experienciasPremium: "Premium-Erlebnisse",
+    trasladosAeropuerto: "Flughafentransfers",
+    trasladosDesc: "Premium-Abhol- und Transferservice zum Flughafen Málaga. Flugüberwachung inklusive.",
+    servicioPorHoras: "Stundenservice",
+    horasDesc: "Fahrer und Fahrzeug stehen Ihnen so lange zur Verfügung, wie Sie es brauchen. Ideal für Meetings und Events.",
+    toursExclusivos: "Exklusive Touren",
+    toursDesc: "Entdecken Sie die Costa del Sol, Ronda, Granada oder Sevilla mit unseren personalisierten Touren.",
+    servicioCorporativo: "Firmenservice",
+    corporativoDesc: "Transportlösungen für Unternehmen. Monatliche Abrechnung und Sondertarife.",
+    nuestraFlota: "Unsere Flotte",
+    vehiculosLujo: "Luxusfahrzeuge",
+    fotos: "Fotos",
+    pax: "Pax",
+    tarifasTransparentes: "Transparente Preise",
+    preciosDesde: "Preise ab Flughafen",
+    preciosDesc: "Feste Preise ohne Überraschungen. Der Preis beinhaltet Maut, Parken und 60 Minuten kostenlose Wartezeit.",
+    duracion: "Dauer",
+    sedan: "Limousine (1-3 Pax)",
+    van: "Van (4-7 Pax)",
+    preciosNota: "* Preise für einfache Fahrt. Fragen Sie nach Hin- und Rückfahrt-Rabatten.",
+    testimonios: "Bewertungen",
+    loQueDicen: "Was Unsere Kunden Sagen",
+    sobreNosotros: "Über Uns",
+    excelenciaKm: "Exzellenz auf Jedem Kilometer",
+    aboutText1: "Seit 2015 hat Transfer del Sur Costa del Sol das Konzept des Premium-Transports in der Region neu definiert. Wir wurden mit einer klaren Mission geboren: einen Chauffeurservice anzubieten, der europäische Eleganz mit mediterraner Wärme verbindet.",
+    aboutText2: "Unsere Fahrer sind nicht einfach nur Fahrprofis; sie sind Botschafter der Costa del Sol. Sie sprechen mehrere Sprachen, kennen jeden Winkel der Region und sind darauf geschult, Ihre Bedürfnisse zu antizipieren, bevor Sie sie äußern.",
+    aboutText3: "Jedes Fahrzeug unserer Flotte wird sorgfältig ausgewählt und nach höchsten Standards gewartet. Denn wir wissen, dass Details den Unterschied zwischen einer Fahrt und einem unvergesslichen Erlebnis ausmachen.",
+    anosExperiencia: "Jahre Erfahrung",
+    clientesSatisfechos: "Zufriedene Kunden",
+    kmRecorridos: "Gefahrene Kilometer",
+    blogNoticias: "Blog & Nachrichten",
+    descubreCosta: "Entdecken Sie die Costa del Sol",
+    verTodos: "Alle Anzeigen",
+    tienePreguntas: "Haben Sie Fragen?",
+    contactoDesc: "Wir sind 24/7 erreichbar, um Ihre Anfragen und Buchungen zu beantworten. Zögern Sie nicht, uns über den für Sie bequemsten Weg zu kontaktieren.",
+    direccion: "Adresse",
+    contactarWhatsapp: "Kontakt über WhatsApp",
+    nombre: "Name",
+    asunto: "Betreff",
+    mensaje: "Nachricht",
+    enviarMensaje: "Nachricht Senden",
+    mensajeExitoso: "Nachricht erfolgreich gesendet! Wir werden uns bald bei Ihnen melden.",
+    derechos: "Alle Rechte vorbehalten."
+  }
+};
+
+// Language Context
+const LanguageContext = createContext();
+
+const LanguageProvider = ({ children }) => {
+  const [language, setLanguage] = useState('es');
+  const t = (key) => translations[language][key] || key;
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+const useLanguage = () => useContext(LanguageContext);
+
+// Language Selector Component
+const LanguageSelector = () => {
+  const { language, setLanguage } = useLanguage();
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const languages = [
+    { code: 'es', name: 'Español', flag: '🇪🇸' },
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+    { code: 'de', name: 'Deutsch', flag: '🇩🇪' }
+  ];
+  
+  const currentLang = languages.find(l => l.code === language);
+  
+  return (
+    <div className="relative">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 text-sm text-gray-300 hover:text-gold transition"
+        data-testid="language-selector"
+      >
+        <Globe size={16} />
+        <span>{currentLang?.flag} {currentLang?.code.toUpperCase()}</span>
+      </button>
+      
+      {isOpen && (
+        <div className="absolute top-full right-0 mt-2 bg-[#111113] border border-[#1F1F23] rounded-lg overflow-hidden z-50 min-w-[140px]">
+          {languages.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => { setLanguage(lang.code); setIsOpen(false); }}
+              className={`w-full px-4 py-2 text-left text-sm hover:bg-[#1F1F23] transition flex items-center gap-2 ${language === lang.code ? 'text-gold' : 'text-gray-300'}`}
+              data-testid={`lang-${lang.code}`}
+            >
+              <span>{lang.flag}</span> {lang.name}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 // Services data
 const services = [
