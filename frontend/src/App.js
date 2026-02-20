@@ -616,14 +616,15 @@ const Navbar = () => {
         {isOpen && (
           <div className="lg:hidden mt-4 pb-4 border-t border-gray-800 pt-4">
             <div className="flex flex-col gap-4">
-              <a href="#hero" className="nav-link" onClick={() => setIsOpen(false)}>Inicio</a>
-              <a href="#servicios" className="nav-link" onClick={() => setIsOpen(false)}>Servicios</a>
-              <a href="#flota" className="nav-link" onClick={() => setIsOpen(false)}>Flota</a>
-              <a href="#tarifas" className="nav-link" onClick={() => setIsOpen(false)}>Tarifas</a>
-              <a href="#nosotros" className="nav-link" onClick={() => setIsOpen(false)}>Nosotros</a>
-              <a href="#contacto" className="nav-link" onClick={() => setIsOpen(false)}>Contacto</a>
-              <Link to="/admin" className="nav-link" onClick={() => setIsOpen(false)}>Admin</Link>
-              <a href="#reservar" className="btn-primary text-center" onClick={() => setIsOpen(false)}>Reservar</a>
+              <a href="#hero" className="nav-link" onClick={() => setIsOpen(false)}>{t('inicio')}</a>
+              <a href="#servicios" className="nav-link" onClick={() => setIsOpen(false)}>{t('servicios')}</a>
+              <a href="#flota" className="nav-link" onClick={() => setIsOpen(false)}>{t('flota')}</a>
+              <a href="#tarifas" className="nav-link" onClick={() => setIsOpen(false)}>{t('tarifas')}</a>
+              <a href="#nosotros" className="nav-link" onClick={() => setIsOpen(false)}>{t('nosotros')}</a>
+              <a href="#contacto" className="nav-link" onClick={() => setIsOpen(false)}>{t('contacto')}</a>
+              <div className="py-2"><LanguageSelector /></div>
+              <Link to="/admin" className="nav-link" onClick={() => setIsOpen(false)}>{t('admin')}</Link>
+              <a href="#reservar" className="btn-primary text-center" onClick={() => setIsOpen(false)}>{t('reservar')}</a>
             </div>
           </div>
         )}
@@ -633,7 +634,9 @@ const Navbar = () => {
 };
 
 // Hero Section
-const HeroSection = () => (
+const HeroSection = () => {
+  const { t } = useLanguage();
+  return (
   <section 
     id="hero" 
     className="hero"
@@ -642,20 +645,19 @@ const HeroSection = () => (
   >
     <div className="hero-overlay"></div>
     <div className="relative z-10 max-w-7xl mx-auto px-6 py-32">
-      <p className="section-label">Servicio Premium VTC</p>
+      <p className="section-label">{t('servicioPremium')}</p>
       <h1 className="text-5xl md:text-7xl font-light mb-6" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-        Su Experiencia<br />
-        <span className="italic">en la Costa del Sol</span>
+        {t('heroTitle1')}<br />
+        <span className="italic">{t('heroTitle2')}</span>
       </h1>
       <p className="text-gray-400 max-w-xl mb-8 text-lg">
-        Traslados de lujo al aeropuerto, servicios por horas y tours exclusivos por Málaga y alrededores. 
-        Conductores profesionales, vehículos premium.
+        {t('heroDesc')}
       </p>
       <div className="flex flex-wrap gap-4">
         <a href="#reservar" className="btn-primary flex items-center gap-2" data-testid="hero-reserve-btn">
-          Reservar Ahora <ChevronRight size={16} />
+          {t('reservarAhora')} <ChevronRight size={16} />
         </a>
-        <a href="#flota" className="btn-outline">Ver Flota</a>
+        <a href="#flota" className="btn-outline">{t('verFlota')}</a>
       </div>
 
       <div className="stats-bar mt-12">
