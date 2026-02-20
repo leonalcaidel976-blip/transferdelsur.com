@@ -801,7 +801,7 @@ const BookingSection = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Destino *</label>
+                <label className="block text-sm text-gray-400 mb-2">{t('destino')} *</label>
                 <select
                   name="destination"
                   value={formData.destination}
@@ -810,7 +810,7 @@ const BookingSection = () => {
                   required
                   data-testid="select-destination"
                 >
-                  <option value="">Seleccione destino</option>
+                  <option value="">{t('seleccioneDestino')}</option>
                   {destinations.map(d => <option key={d} value={d}>{d}</option>)}
                 </select>
               </div>
@@ -818,7 +818,7 @@ const BookingSection = () => {
 
             <div className="grid md:grid-cols-4 gap-6 mb-6">
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Fecha *</label>
+                <label className="block text-sm text-gray-400 mb-2">{t('fecha')} *</label>
                 <input
                   type="date"
                   name="date"
@@ -830,7 +830,7 @@ const BookingSection = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Hora *</label>
+                <label className="block text-sm text-gray-400 mb-2">{t('hora')} *</label>
                 <input
                   type="time"
                   name="time"
@@ -842,7 +842,7 @@ const BookingSection = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Pasajeros</label>
+                <label className="block text-sm text-gray-400 mb-2">{t('pasajeros')}</label>
                 <select
                   name="passengers"
                   value={formData.passengers}
@@ -854,7 +854,7 @@ const BookingSection = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Maletas</label>
+                <label className="block text-sm text-gray-400 mb-2">{t('maletas')}</label>
                 <select
                   name="luggage"
                   value={formData.luggage}
@@ -867,9 +867,26 @@ const BookingSection = () => {
               </div>
             </div>
 
+            {/* Vehicle selector */}
+            <div className="mb-6">
+              <label className="block text-sm text-gray-400 mb-2">{t('vehiculoPreferido')}</label>
+              <select
+                name="preferred_vehicle"
+                value={formData.preferred_vehicle}
+                onChange={handleChange}
+                className="input-field"
+                data-testid="select-vehicle"
+              >
+                <option value="">{t('sinPreferencia')}</option>
+                <option value="Mercedes Clase E (Sedan Ejecutivo)">Mercedes Clase E (Sedan Ejecutivo - 1-3 pax)</option>
+                <option value="Mercedes Clase V (Van Premium)">Mercedes Clase V (Van Premium - 4-7 pax)</option>
+                <option value="Mercedes Clase S (Sedan Lujo)">Mercedes Clase S (Sedan Lujo - 1-3 pax)</option>
+              </select>
+            </div>
+
             <div className="grid md:grid-cols-3 gap-6 mb-6">
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Nombre completo *</label>
+                <label className="block text-sm text-gray-400 mb-2">{t('nombreCompleto')} *</label>
                 <input
                   type="text"
                   name="name"
