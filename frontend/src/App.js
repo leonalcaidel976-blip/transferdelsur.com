@@ -1453,14 +1453,6 @@ const Footer = () => (
         <div className="text-center text-sm text-gray-500">
           © 2024 Transfer del Sur. Todos los derechos reservados.
         </div>
-        <a 
-          href="https://app.emergent.sh/?utm_source=emergent-badge"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-gray-500 hover:text-gold transition"
-        >
-          Made with Emergent
-        </a>
       </div>
     </div>
   </footer>
