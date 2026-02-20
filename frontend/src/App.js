@@ -566,6 +566,7 @@ const destinations = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -585,19 +586,20 @@ const Navbar = () => {
           </a>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-8">
-            <a href="#hero" className="nav-link">Inicio</a>
-            <a href="#servicios" className="nav-link">Servicios</a>
-            <a href="#flota" className="nav-link">Flota</a>
-            <a href="#tarifas" className="nav-link">Tarifas</a>
-            <a href="#nosotros" className="nav-link">Nosotros</a>
-            <a href="#blog" className="nav-link">Blog</a>
-            <a href="#contacto" className="nav-link">Contacto</a>
+          <div className="hidden lg:flex items-center gap-6">
+            <a href="#hero" className="nav-link">{t('inicio')}</a>
+            <a href="#servicios" className="nav-link">{t('servicios')}</a>
+            <a href="#flota" className="nav-link">{t('flota')}</a>
+            <a href="#tarifas" className="nav-link">{t('tarifas')}</a>
+            <a href="#nosotros" className="nav-link">{t('nosotros')}</a>
+            <a href="#blog" className="nav-link">{t('blog')}</a>
+            <a href="#contacto" className="nav-link">{t('contacto')}</a>
+            <LanguageSelector />
             <a href="tel:+34600221794" className="nav-link flex items-center gap-2">
               <Phone size={14} /> +34600221794
             </a>
-            <Link to="/admin" className="btn-outline text-xs" data-testid="admin-btn">Admin</Link>
-            <a href="#reservar" className="btn-primary text-xs" data-testid="reserve-btn">Reservar</a>
+            <Link to="/admin" className="btn-outline text-xs" data-testid="admin-btn">{t('admin')}</Link>
+            <a href="#reservar" className="btn-primary text-xs" data-testid="reserve-btn">{t('reservar')}</a>
           </div>
 
           {/* Mobile menu button */}
